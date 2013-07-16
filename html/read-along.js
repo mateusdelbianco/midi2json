@@ -51,7 +51,6 @@ var ReadAlong = {
             word_el.dataset.index = word.index;
             return word;
         }));
-        console.log(this.words);
     },
 
     /**
