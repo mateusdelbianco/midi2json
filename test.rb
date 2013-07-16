@@ -32,7 +32,7 @@ seq.each do | track |
   track.each do | event |
     if event.kind_of?(MIDI::MetaEvent) && event.meta_type == MIDI::META_LYRIC
       text = event.data.collect{|x| x.chr(Encoding::UTF_8)}.join
-      if text.strip != ""
+      if text.gsub(" ", "") != ""
         lyrics_syllables << LyricSyllable.new(
           :start => event.time_from_start,
           :duration => event.delta_time,
