@@ -46,6 +46,11 @@ noteon_track.each do |event|
   durations[event.time_from_start] = event.off.time_from_start - event.time_from_start
 end
 
+
+while lyrics_track.events.first.data.collect{|x| x.chr(Encoding::UTF_8)}.join.strip == ""
+  lyrics_track.events.shift
+end
+
 lyrics_syllables = []
 lyrics_track.each do |event|
   lyrics_syllables << LyricSyllable.new(
