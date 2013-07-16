@@ -26,21 +26,33 @@ File.open(ARGV[0], "rb") do | file |
   seq.read(file)
 end
 
-lyrics_syllables = []
 
-seq.each do | track |
-  track.each do | event |
-    if event.kind_of?(MIDI::MetaEvent) && event.meta_type == MIDI::META_LYRIC
-      text = event.data.collect{|x| x.chr(Encoding::UTF_8)}.join
-      if text.gsub(" ", "") != ""
-        lyrics_syllables << LyricSyllable.new(
-          :start => event.time_from_start,
-          :duration => event.delta_time,
-          :text => text,
-        )
-      end
+lyrics_track = MIDI::Track.new(seq)
+noteon_track = MIDI::Track.new(seq)
+seq.tracks[1].each do | event |
+  if event.kind_of?(MIDI::MetaEvent) && event.meta_type == MIDI::META_LYRIC
+    text = event.data.collect{|x| x.chr(Encoding::UTF_8)}.join
+    if text.gsub(" ", "") != ""
+      lyrics_track.events << event
     end
   end
+  if event.kind_of?(MIDI::NoteOn)
+    noteon_track.events << event
+  end
+end
+
+durations = {}
+noteon_track.each do |event|
+  durations[event.time_from_start] = event.off.time_from_start - event.time_from_start
+end
+
+lyrics_syllables = []
+lyrics_track.each do |event|
+  lyrics_syllables << LyricSyllable.new(
+    :start => event.time_from_start,
+    :duration => durations[event.time_from_start],
+    :text => event.data.collect{|x| x.chr(Encoding::UTF_8)}.join,
+  )
 end
 
 puts lyrics_syllables.collect(&:as_json).to_json
