@@ -5,12 +5,12 @@ require "json"
 require "debugger"
 
 class LyricSyllable < OpenStruct
-  def to_json
+  def as_json
     {
       "start" => self.start,
       "duration" => self.duration,
       "text" => self.text
-    }.to_json
+    }
   end
 end
 
@@ -43,4 +43,4 @@ seq.each do | track |
   end
 end
 
-print lyrics_syllables.collect(&:to_json).to_json
+puts lyrics_syllables.collect(&:as_json).to_json
