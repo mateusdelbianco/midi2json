@@ -2,7 +2,6 @@ require "rubygems"
 require "midilib"
 require "ostruct"
 require "json"
-require "debugger"
 
 class LyricSyllable < OpenStruct
   def as_json
