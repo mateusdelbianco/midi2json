@@ -7,8 +7,8 @@ require "debugger"
 class LyricSyllable < OpenStruct
   def as_json
     {
-      "start" => self.start,
-      "duration" => self.duration,
+      "start" => self.seq.pulses_to_seconds(self.start.to_f).round(3),
+      "duration" => self.seq.pulses_to_seconds(self.duration.to_f).round(3),
       "text" => self.text
     }
   end
@@ -49,6 +49,7 @@ end
 lyrics_syllables = []
 lyrics_track.each do |event|
   lyrics_syllables << LyricSyllable.new(
+    :seq => seq,
     :start => event.time_from_start,
     :duration => durations[event.time_from_start],
     :text => event.data.collect{|x| x.chr(Encoding::UTF_8)}.join,
