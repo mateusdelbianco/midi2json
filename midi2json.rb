@@ -7,6 +7,4 @@ if ARGV[0].nil?
   exit
 end
 
-lyrics = MidiLyrics::Parser.new(ARGV[0]).extract
-
-puts lyrics.collect(&:as_json).to_json
+puts MidiLyrics::Parser.new(ARGV[0]).extract.to_json
