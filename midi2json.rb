@@ -9,4 +9,4 @@ end
 
 lyrics = MidiLyrics::Parser.new(ARGV[0]).extract
 
-puts lyrics.collect{|x| { text: x.text, start: x.start, start2: x.start2, duration: x.duration } }.to_json
+puts lyrics.collect(&:as_json).to_json
