@@ -9,7 +9,13 @@ end
 lyrics_syllables = JSON::load(File.read(ARGV[0]))
 
 lyrics_syllables.each do |ls|
-  print "<span data-dur=\"#{ls['duration']}\" data-begin=\"#{ls['start']}\""
-  print " data-begintwo=\"#{ls['start2']}\"" unless ls['start2'].nil?
-  print ">#{ls['text'].gsub("\n", "<br />").gsub("\r", "<br />")}</span>"
+  if ls['duration'] > 0.0
+    print "<span data-dur=\"#{ls['duration']}\" data-begin=\"#{ls['start']}\""
+    print " data-begintwo=\"#{ls['start2']}\"" unless ls['start2'].nil?
+    print ">"
+  end
+  print "#{ls['text'].gsub("\n", "<br />").gsub("\r", "<br />")}"
+  if ls['duration'] > 0.0
+    print "</span>"
+  end
 end
