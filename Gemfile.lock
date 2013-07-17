@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    json (1.8.0)
+    midi_lyrics (0.0.2)
+      midilib (~> 2.0.0)
+    midilib (2.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json
+  midi_lyrics
