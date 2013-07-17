@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     json (1.8.0)
-    midi_lyrics (0.0.3)
+    midi_lyrics (0.0.6)
       midilib (~> 2.0.0)
     midilib (2.0.4)
 
